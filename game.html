@@ -1,0 +1,1839 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.3.1.js"
+	integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+	crossorigin="anonymous"></script>
+<script type="text/javascript" src="js/phaser.min.js"></script>
+<link rel="stylesheet" href="style/stylePause.css">
+<link rel="stylesheet" href="style/styleSocial.css">
+<link rel="shortcut icon" type="image/x-icon"
+	href="/survival/game/favicon.ico">
+<title>ANOTHER SURVIVAL</title>
+</head>
+<body style="position: relative">
+	<div id="pause"
+		style="display: none; position: absolute; z-index: 100; width: 300px; height: 500px; background-color: black; float: left; margin-left: 520px; margin-top: 50px;">
+		<h1 id="h1pause">Jogo pausado!</h1>
+
+		<h1 id="h1pause">Pressione "P" para retornar</h1>
+		<br> <input id="btnsair" type="submit" value="Voltar ao menu"
+			onclick="voltarMenu()">
+		<h1 id="h1pause">Pressione o botao para reiniciar</h1>
+		<br> <input id="btnsair" type="submit" value="Recomeçar"
+			onclick="reiniciaFase()">
+	</div>
+
+	<div id="gameOver"
+		style="display: none; position: absolute; z-index: 100; width: 500px; height: 500px; background-color: black; float: left; margin-left: 450px; margin-top: 50px;">
+		<h1 id="h1pause">Game Over!</h1>
+
+		<h1 id="h1pause">Pressione o botao para ir ao menu</h1>
+		<br> <input id="btnsair" type="submit" value="Voltar ao menu"
+			onclick="voltarMenu()">
+			<a class="resp-sharing-button__link" href="https://facebook.com/sharer/sharer.php?u=http://35.239.206.173/AnotherSurvival" target="_blank" aria-label="Share on Facebook">
+					  <div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--large"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+					    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z"/></svg>
+					    </div>Compartilhar no Facebook</div>
+					</a>
+					
+					<!-- Sharingbutton Twitter -->
+					<a class="resp-sharing-button__link" href="https://twitter.com/intent/tweet/?text=Jogue%20o%20snake%20em:.&url=http://35.239.206.173/AnotherSurvival" target="_blank" aria-label="Share on Twitter">
+					  <div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--large"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+					    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z"/></svg>
+					    </div>Compartilhar no Twitter</div>
+					</a>
+	</div>
+
+
+	<div id="fimJogo"
+		style="display: none; position: absolute; z-index: 100; width: 500px; height: 500px; background-color: black; float: left; margin-left: 450px; margin-top: 50px;">
+		<h1>Fim de Jogo</h1>
+		<h1>Voce venceu !</h1>
+		<h1>Cleyton salvou o mundo !!!</h1>
+		<a class="resp-sharing-button__link"
+			href="https://facebook.com/sharer/sharer.php?u=http://35.239.206.173/snake"
+			target="_blank" aria-label="Share on Facebook">
+			<div
+				class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--large">
+				<div aria-hidden="true"
+					class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+						<path
+							d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z" /></svg>
+				</div>
+				Compartilhar no Facebook
+			</div>
+		</a>
+
+		<!-- Sharingbutton Twitter -->
+		<a class="resp-sharing-button__link"
+			href="https://twitter.com/intent/tweet/?text=Jogue%20o%20snake%20em:.&url=http://35.239.206.173/snake"
+			target="_blank" aria-label="Share on Twitter">
+			<div
+				class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--large">
+				<div aria-hidden="true"
+					class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+						<path
+							d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" /></svg>
+				</div>
+				Compartilhar no Twitter
+			</div>
+		</a> <input id="btnVoltarMenu" type="submit" value="Voltar a tela de Menu"
+			onclick="voltarMenu()"> <br>
+	</div>
+
+
+	<script>
+        //INICIAR VARIAVEL DO JOGO "GAME"
+
+        var game = new Phaser.Game(800, 600, Phaser.CANVAS, null, { preload: preload, create: create, update: update });
+        //VARIAVEIS
+
+        //Variaveis Player
+        var pausado = false;
+       var pressp = 0;
+        var Player = 0;
+        var Inimigo = 0;
+        var rightKey = 0;
+        var leftKey = 0;
+        var bulletTime = 0;
+        var bullet;
+        var podeatirar = false;
+        var contadortiro = 0;
+        var PlayerVivo = true;
+        var contCoracoes = 2;
+        var Coracao = [];
+        var vidas = 5;
+
+        //Variaveis Inimigos
+        var boss1 = 0;
+        var bulletTimeBoss = 0;
+        var bulletBoss = 0;
+        var textoPontuacao = 0;
+        var podeatirarBoss = false;
+        var contadortiroBoss = 0;
+        var bossVivo = true;
+        var escudo = 0;
+        var x = 0;
+        var y = 0;
+        var inimigosAero = 0;
+        var inimigoTerra = 0;
+        var livingEnemies = [];
+        var inimigosCriados = 0;
+        var enemyBullets = 0;
+        var firingTimer = 0;
+        var max = 0;
+        var front_emitter;
+        var mid_emitter;
+        var back_emitter;
+        var update_interval = 4 * 60;
+        var pontoInimigo = 0;
+
+        //Neve
+        var i = 0;
+
+        //Fundos
+        var fundoFim = 0;
+        var findoFimExibe1vez = false;
+        var textoFim = 0;
+        var fase = 1;
+        var neveJaRende = false;
+        var teste;
+        var teste1;
+        //Pontuação e contadores
+        var pontuacao = 0;
+        var inimigosVivos = 0;
+        var venceu = false;
+        var textoFim2 = 0;
+        var textoFim3 = 0;
+
+        //Hits
+        var acertouInimigoTerra = false;
+        var inimigoTerraMorreu = false;
+        var inimigoArMorreu = false;
+        var acertouInimigoAero = false;
+        var salvaNumero;
+        var contInimigoTerraMortoTexto = 0
+        var x1
+        var y2
+        var acertouBoss = false;
+        var numboss = 1;
+		var pauseRenderizou = 0;
+
+        //   
+
+        var pressionouEspaco = false;
+        var contadorMorte = 0;
+        var renderizouFundo1Vez = false;
+        var renderizouNeve1Vez = false;
+        var passouFase1 = 0;
+        var pontFaze = 1;
+        var pontuacaoAntiga = 0;
+        var qntTiroInimi = 1;
+var playerRecebeDano
+        //Variaveis de controle             
+        var vidas = 5;
+        //Quantos inimigos nascem no ar
+        var inimigosCriadosSpawnAero = 1;
+        //Quantos inimigos nascem no chão
+        var inimigosCriadosSpawnChao = 0;
+        //Velocidade do tiro do boss (Padrão 900)
+        var velocidadeTiroBoss = 500;
+        //Velocidade do tiro do inimigo (Padrão 120)
+        var velocidadeTiroInimigo = 80;
+        //Vida dos inimigos do ar
+        var vidaInimigoAero = 2
+        //Vida dos inimigos da terra
+        var vidaInimigoTerrestre = 3;
+        //Vida do boss
+        var vidaBoss = 3
+        //Vida do escudo do boss
+        var vidaEscudo = 4
+        //Probablilidade de nascer um inimigo do ar no tiro(Quanto maior o numero, menor a chance)
+        var probabilidadeSpawnAero = 18
+        //Probabilidade de nascer um inimigo do chão no tiro(Quanto menor o numero, menor a chance)
+        var probabilidadeSpawnTerrestre = 2
+        //A pontuação que o boss da quando morre 
+        var pontuacaoBoss = 500
+        //Pontuação do inimigo do ar
+        var pontuacaoInimigoAero = 50
+        //Pontuação do inimigo da terra
+        var pontuacaoInimigoTerrestre = 25
+        //           
+        function preload() {
+            // Define a tela
+            
+            game.scale.scalesMode = Phaser.ScaleManager.SHOW_ALL;
+            game.scale.pageAlignHorizontally = true;
+            game.scale.pageAlignVertically = true;
+            game.stage.backgroundColor = '#eee';
+            // Carregar imagens do jogo
+            carregaImagens();
+
+        }
+        function create() {
+        	
+            //Adiciona o Player, Boss e deixa os inimigos pré criados.
+            definirBotoes();
+            adicionarFisicaEPlayer();
+            adicionaInimigosETiros();
+            if (fase == 1) {
+                adicionaNeve();
+            }
+
+            //Adiciona o texto de pontuação na tela
+            pontoInimigo = game.add.text(0, 0, '', { font: '12px Arial', fill: '#ff0000' });
+            textoPontuacao = game.add.text(660, 5, 'Sem Pontuação', { font: '18px Arial', fill: '#f00'});
+
+
+        }
+        function update() {
+            if (vidas == 0) {
+                if (!renderizouFundo1Vez) {
+                    $('#gameOver').show();
+                	renderizouFundo1Vez = true;
+                }
+                
+                contadorMorte++
+                if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && !pressionouEspaco && contadorMorte >= 50) {
+                    fundoFim.destroy(true, true);
+                    textoFim.destroy(true, true);
+                    textoFim2.destroy(true, true);
+                    pressionouEspaco = true;
+                    vidas = 5;
+                    fase = 1;
+                    numboss = 1;
+                    pontuacao = 0;
+                    pontFaze = 1;
+                    pontuacaoAntiga = 0;
+                    recomecar(fase);
+                }
+
+            }
+            pauseRenderizou += 1;
+            if(pressp.isDown && pauseRenderizou >= 50){
+            	pauseRenderizou = 0;
+            	togglePause();
+            }
+            //Se a pontuação for diferente de 0, ele coloca o valor na tela.
+            if (pontuacao != 0) {
+                if (pontuacao > 10000) {
+                    textoPontuacao.x = 650
+                }
+                if (pontuacao > 100000) {
+                    textoPontuacao.x = 640
+                }
+                if (pontuacao > 1000000) {
+                    textoPontuacao.x = 630
+                }
+                textoPontuacao.setText('Pontuação: ' + pontuacao)
+            }
+            //Invoca o slime da terra a adiciona a animação da neve
+
+            //Se o player estiver vivo e vencer não for verdadeiro.
+            //Vencer só vai ser verdadeiro quando os inimigos e o boss estiverem mortos.
+            if (PlayerVivo && !venceu && vidas != 0 && fase != 9) {
+                //Adiciona as colisões no jogo
+                //Se as balas do player acertarem o boss, entra na função "HitBoss"
+                game.physics.arcade.overlap(bullets, boss1, Hitboss);
+                //Se as balas do boss acertarem o player, entra na função "HitplayerTiroBoss"
+                game.physics.arcade.overlap(bulletsBoss, Player, HitplayerTiroBoss);
+                //Se as balas do player acertarem o escudo, entra na função "HitEscudo"
+                game.physics.arcade.overlap(bullets, escudo, HitEscudo);
+                //Se as balas do player acertarem os inimigos do ar, entra na função "Hitinimigo"
+                game.physics.arcade.overlap(bullets, inimigosAero, Hitinimigo);
+                //Se o player acertar o inimigo da terra , entra na função "HitinimigoT"
+                game.physics.arcade.overlap(Player, inimigoTerra, HitinimigoT);
+                //Se as balas dos inimigos do ar acertarem o player, entra na função "HitplayerTiroInimigo"
+                game.physics.arcade.overlap(Player, enemyBullets, HitplayerTiroInimigo);
+                //Move o inimigo e coloca o escudo na mesma posição que o boss
+                moverInimigo();
+                escudoBoss1();
+
+                //Detecta o movimento do player e do boss
+                andar(rightKey, leftKey);
+                andarBoss(boss1);
+
+                //Detecta o tiro do player e do boss
+                atirar();
+                bossAtira();
+
+                //Detecta o tiro dos inimigos do ar
+                if (game.time.now > firingTimer) {
+                    enemyFires();
+                }
+                if (fase == 1) {
+                    animaNeve();
+                }
+                //Altera a pontuação dos inimigos mortos e cria textinho com "+PONTUAÇÃO" na tela
+                contabilizaMorteInimigo(1, 1)
+
+                //Define se o player venceu, se não tiver nenhum inimigo vivo e o boss estiver morto
+                if (inimigosVivos == 0 && !bossVivo) {
+                    venceu = true;
+                }
+                
+            }
+
+
+            else if (!PlayerVivo && vidas != 0) {
+                boss1.kill();
+                escudo.kill();
+                escudo.x = boss1.x;
+                if (!findoFimExibe1vez) {
+                    fundoFim = game.add.sprite(0, 0, 'gameOver');
+                    findoFimExibe1vez = true;
+
+                    textoFim = game.add.text(200, 280, 'Você morreu!', { font: '72px Arial', fill: '#ff0000' });
+                    textoFim2 = game.add.text(280, 380, 'Pressione ESPAÇO para recomeçar!', { font: '20px Arial', fill: '#ff0000' })
+                    textoFim3 = game.add.text(370, 420, 'Vidas restantes: ' + vidas, { font: '15px Arial', fill: '#ff0000' })
+
+                }
+                contadorMorte++
+                if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && !pressionouEspaco && contadorMorte >= 50) {
+                    fundoFim.destroy();
+                    textoFim.destroy();
+                    textoFim2.destroy();
+                    pressionouEspaco = true;
+                    salvaScores(fase,pontuacao);
+                    recomecar(fase);
+                }
+            }
+            else if (vidas != 0 && fase != 9) {
+                if (!findoFimExibe1vez) {
+                    fundoFim = game.add.sprite(0, 0, 'gameOver');
+                    findoFimExibe1vez = true;
+                    textoFim = game.add.text(200, 280, 'Você venceu!!', { font: '72px Arial', fill: '#ff0000' });
+                    textoFim2 = game.add.text(250, 380, 'Pressione ESPAÇO para ir a proxima faze!', { font: '20px Arial', fill: '#ff0000' })
+
+                }
+                contadorMorte++
+                if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && !pressionouEspaco && contadorMorte >= 50) {
+                    fundoFim.destroy();
+                    textoFim.destroy();
+                    textoFim2.destroy();
+                    pressionouEspaco = true;
+                    salvaScores(fase,pontuacao);
+                    fase++;
+                    numboss++;
+                    vidas++;
+                    if (fase === 4 || fase === 5) {
+                        vidas++;
+                    } else if (fase === 6) {
+                        vidas + 2;
+                    } else if (fase === 7) {
+                        vidas + 4;
+                    } else if (fase === 8) {
+                        vidas + 5;
+                    }
+                   
+                    recomecar(fase);
+
+                }
+
+            }
+        }
+
+        //Carrega imagens e define os botoes
+        function definirBotoes() {
+            // Definir que serão usados pelo player
+            rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+            leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+            espaco = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+            pressp = game.input.keyboard.addKey(Phaser.Keyboard.P);
+            pressT = game.input.keyboard.addKey(Phaser.Keyboard.T);
+            
+        }
+        function carregaImagens() {
+
+            // for (fase = 1; fase < 1; fase++) {
+            game.load.image('fundo', 'imagens/spritesFundo/fundo1.png');
+            game.load.image('fundo1', 'imagens/spritesFundo/fundo2.png');
+            game.load.image('fundo2', 'imagens/spritesFundo/fundo3.png');
+            game.load.image('fundo3', 'imagens/spritesFundo/fundo4.png');
+            game.load.image('fundo4', 'imagens/spritesFundo/fundo5.png');
+            game.load.image('fundo5', 'imagens/spritesFundo/fundo6.png');
+            game.load.image('fundo6', 'imagens/spritesFundo/fundo7.png');
+            game.load.image('fundo7', 'imagens/spritesFundo/fundo8.png');
+            //-----------------------------------------------------------
+
+            game.load.image('boss1', 'imagens/spritesMonstros/boss1.png');
+            game.load.image('boss2', 'imagens/spritesMonstros/boss2.png');
+            game.load.image('boss3', 'imagens/spritesMonstros/boss3.png');
+            game.load.image('boss4', 'imagens/spritesMonstros/boss4.png');
+            game.load.image('boss5', 'imagens/spritesMonstros/boss5.png');
+            game.load.image('boss6', 'imagens/spritesMonstros/boss6.png');
+            game.load.image('boss7', 'imagens/spritesMonstros/boss7.png');
+            game.load.image('boss8', 'imagens/spritesMonstros/boss8.png');
+            //-----------------------------------------------------------
+            game.load.image('slime1', 'imagens/spritesMonstros/aereo1.png');
+            game.load.image('slime2', 'imagens/spritesMonstros/aereo2.png');
+            game.load.image('slime3', 'imagens/spritesMonstros/aereo3.png');
+            game.load.image('slime4', 'imagens/spritesMonstros/aereo4.png');
+            game.load.image('slime5', 'imagens/spritesMonstros/aereo5.png');
+            game.load.image('slime6', 'imagens/spritesMonstros/aereo6.png');
+            game.load.image('slime7', 'imagens/spritesMonstros/aereo7.png');
+            game.load.image('slime8', 'imagens/spritesMonstros/aereo8.png');
+
+            //-----------------------------------------------------------
+            game.load.image('slimeTerra1', 'imagens/spritesMonstros/terra1.png');
+            game.load.image('slimeTerra2', 'imagens/spritesMonstros/terra2.png');
+            game.load.image('slimeTerra3', 'imagens/spritesMonstros/terra3.png');
+            game.load.image('slimeTerra4', 'imagens/spritesMonstros/terra4.png');
+            game.load.image('slimeTerra5', 'imagens/spritesMonstros/terra5.png');
+            game.load.image('slimeTerra6', 'imagens/spritesMonstros/terra6.png');
+            game.load.image('slimeTerra7', 'imagens/spritesMonstros/terra7.png');
+            game.load.image('slimeTerra8', 'imagens/spritesMonstros/terra8.png');
+            //-----------------------------------------------------------
+            game.load.image('escudo1', 'imagens/spritesMonstros/escudo.png');
+            game.load.image('escudo2', 'imagens/spritesMonstros/escudo2.png');
+            game.load.image('escudo5', 'imagens/spritesMonstros/escudo5.png');
+            game.load.image('escudo8', 'imagens/spritesMonstros/escudo8.png');
+            //-------------------------------------------------------------
+            game.load.image('enemyBullet1', 'imagens/spritesMonstros/tiromonstroar1.png');
+            game.load.image('enemyBullet2', 'imagens/spritesMonstros/tiromonstroar2.png');
+            game.load.image('enemyBullet3', 'imagens/spritesMonstros/tiromonstroar1.png');
+            game.load.image('enemyBullet4', 'imagens/spritesMonstros/tiromonstroar4.png');
+            game.load.image('enemyBullet5', 'imagens/spritesMonstros/tiromonstroar5.png');
+            game.load.image('enemyBullet6', 'imagens/spritesMonstros/tiromonstroar1.png');
+            game.load.image('enemyBullet7', 'imagens/spritesMonstros/tiromonstroar7.png');
+            game.load.image('enemyBullet8', 'imagens/spritesMonstros/tiromonstroar1.png');
+
+            game.load.spritesheet('player', 'imagens/spritesPersonagemPrincipal/personagem.png', 50, 100, 2);
+            game.load.image('bullet', 'imagens/spritesPersonagemPrincipal/tiropersonagem1.png');
+            game.load.image('bulletBoss', 'imagens/tiro.png');
+                
+
+            game.load.image('CoracaoSemVida', 'imagens/spritesPersonagemPrincipal/CoraçãoSemVida.png')
+            game.load.image('CoracaoVida', 'imagens/spritesPersonagemPrincipal/CoraçãoVidaFull.png')
+            game.load.image('gameOver', 'imagens/FundoGameOver.png');
+            game.load.spritesheet('snowflakes', 'imagens/snowflakes.png', 25, 25);
+            game.load.spritesheet('snowflakes_large', 'imagens/snowflakes_large.png', 23, 25);
+            //}
+            //Carrega todos as imagens que serão utilizadas no jogo
+           
+        }
+        //Funções do Player
+        function adicionarFisicaEPlayer() {
+
+            //Adicionar o fundo no jogo
+            switch (fase) {
+                case 1:
+                    fundos = game.add.tileSprite(0, 0, game.width, game.height, 'fundo');
+                    break;
+                case 2:
+                    fundos.destroy(true, true);
+                    fundos = game.add.tileSprite(0, 0, game.width, game.height, 'fundo1');
+                    break;
+                case 3:
+                    fundos.destroy(true, true);
+                    fundos = game.add.tileSprite(0, 0, game.width, game.height, 'fundo2');
+                    break;
+                case 4:
+                    fundos.destroy(true, true);
+                    fundos = game.add.tileSprite(0, 0, game.width, game.height, 'fundo3');
+                    break;
+                case 5:
+                    fundos.destroy(true, true);
+                    fundos = game.add.tileSprite(0, 0, game.width, game.height, 'fundo4');
+                    break;
+                case 6:
+                    fundos.destroy(true, true);
+                    fundos = game.add.tileSprite(0, 0, game.width, game.height, 'fundo5');
+                    break;
+                case 7:
+                    fundos.destroy(true, true);
+                    fundos = game.add.tileSprite(0, 0, game.width, game.height, 'fundo6');
+                    break;
+                case 8:
+                    fundos.destroy(true, true);
+                    fundos = game.add.tileSprite(0, 0, game.width, game.height, 'fundo7');
+                    break;
+            }
+            //Adicionar a fisca no jogo
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+            game.physics.arcade.checkCollision.all = true;
+
+            //Adiciona o player no jogo
+            Player = game.add.sprite(game.world.width * 0.5, game.world.height - 125, 'player');
+            game.physics.enable(Player, Phaser.Physics.ARCADE);
+            Player.anchor.set(0.5);
+            Player.body.collideWorldBounds = true;
+            Player.vida = 3;
+            if (fase === 4 || fase === 5) {
+                Player.vida = 4
+            }
+            if (fase === 6 || fase === 7 || fase === 8) {
+                Player.vida = 5
+            }
+            //Adiciona a animação do player
+            var walk = Player.animations.add('walk');
+            Player.animations.play('walk', 4, true);
+
+            //Cria os corações em tela
+            Coracao[0] = game.add.sprite(0, 0, 'CoracaoVida')
+            Coracao[1] = game.add.sprite(30, 0, 'CoracaoVida')
+            Coracao[2] = game.add.sprite(60, 0, 'CoracaoVida')
+            if (fase >= 4) {
+                Coracao[3] = game.add.sprite(90, 0, 'CoracaoVida')
+            }
+            if (fase >= 6) {
+                Coracao[4] = game.add.sprite(120, 0, 'CoracaoVida')
+            }
+        }
+        function andar(rightKey, leftKey) {
+            //Detecta a tecla que foi clicada e chama a função para definir qual lado ele ira andar
+            if (rightKey.isDown) {
+                andarDireita();
+            }
+            if (leftKey.isDown) {
+
+                andarEsquerda();
+            }
+            if (Player.body.y > 475) {
+                Player.body.y = 475
+            }
+           
+        }
+        function andarDireita() {
+            //Anda para a direita
+            Player.body.x += 5;
+        }
+        function andarEsquerda() {
+            //Anda para a esquerda
+            Player.body.x -= 5.
+        }
+        function fireBullet() {
+            //Função que cuida do movimento da bala do player
+            if (game.time.now > bulletTime) {
+                bullet = bullets.getFirstExists(false);
+                if (bullet) {
+                    bullet.reset(Player.x, Player.y - 35);
+                    bullet.body.velocity.y = -900;
+                    bulletTime = game.time.now + 150;
+
+                }
+            }
+
+        }
+        function resetBullet(bullet) {
+            //Ao chamar essa função, a bala sera destruida
+            contadortiro = 10
+            bullet.kill();
+
+        }
+        function atirar() {
+            //Detecta se o player clicou "ESPAÇO" para atirar
+            if (espaco.isDown && podeatirar && PlayerVivo) {
+                fireBullet();
+                contadortiro = 35;
+                podeatirar = false;
+            }
+
+            if (contadortiro == 0) {
+                podeatirar = true
+            }
+            if (podeatirar == false) {
+                contadortiro--
+            }
+        }
+        //Define os hits    
+        function Hitboss() {
+            //Ao dar hit no boss, ele tira 1 de vida do boss, e se a vida dele for menor ou igual a zero, ele sera morto.
+            criaInimigosNoHit();
+            boss1.vida--
+            if (boss1.vida <= 0) {
+                pontuacao += pontuacaoBoss;
+                bossVivo = false;
+                contabilizaMorteInimigo(4, boss1)
+                boss1.kill();
+                escudo.kill();
+            }
+
+            resetBullet(bullet)
+        }
+        function HitEscudo() {
+            //Ao dar hit no escudo, ele tira 1 de vida do escudo, e se a vida dele for menor ou igual a zero, ele sera destruido.
+            criaInimigosNoHit();
+            bullet.kill();
+            escudo.vida--;
+            if (escudo.vida <= 0) {
+                escudo.kill();
+            }
+        }
+        function Hitinimigo(bullet, iniA) {
+            //Ao dar hit no inimigo do ar, ele tira 1 de vida do inimigo do ar, e se a vida dele for menor ou igual a zero, ele sera morto.
+            iniA.vida--
+            if (iniA.vida < 0) {
+                iniA.kill();
+                inimigosVivos -= 1
+                pontuacao += pontuacaoInimigoAero;
+                inimigoArMorreu = true;
+                contabilizaMorteInimigo(2, iniA);
+            }
+            resetBullet(bullet)
+        }
+        function HitplayerTiroBoss() {
+            //Ao player tomar dano do tiro do boss, perde 1 de vida e define qual coração sera mostrado em tela
+            Player.vida--
+            Coracao[contCoracoes].kill();
+            switch (contCoracoes) {
+                case 0:
+                    Coracao[contCoracoes] = game.add.sprite(0, 0, 'CoracaoSemVida')
+                    break;
+                case 1:
+                    Coracao[contCoracoes] = game.add.sprite(30, 0, 'CoracaoSemVida')
+                    break;
+                case 2:
+                    Coracao[contCoracoes] = game.add.sprite(60, 0, 'CoracaoSemVida')
+                    break;
+                case 3:
+                    Coracao[contCoracoes] = game.add.sprite(90, 0, 'CoracaoSemVida')
+                    break;
+                case 4:
+                    Coracao[contCoracoes] = game.add.sprite(120, 0, 'CoracaoSemVida')
+                    break;
+            }
+            contCoracoes--
+            if (contCoracoes < 0) {
+                if (fase > 4) {
+                    contCoracoes = 2;
+                }
+                if (fase >= 4) {
+                    contCoracoes = 3;
+                }
+                if (fase >= 6) {
+                    contCoracoes = 4
+                }
+            }
+            if (Player.vida <= 0) {
+                Player.kill();
+                vidas--;
+                PlayerVivo = false;
+            }
+            bulletBoss.kill(bulletBoss);
+        }
+        function HitplayerTiroInimigo(Player, enemyBullet) {
+            //Ao player tomar dano do tiro do inimigo do ar, perde 1 de vida e define qual coração sera mostrado em tela
+            Player.vida--
+            Coracao[contCoracoes].kill();
+            switch (contCoracoes) {
+                case 0:
+                    Coracao[contCoracoes] = game.add.sprite(0, 0, 'CoracaoSemVida')
+                    break;
+                case 1:
+                    Coracao[contCoracoes] = game.add.sprite(30, 0, 'CoracaoSemVida')
+                    break;
+                case 2:
+                    Coracao[contCoracoes] = game.add.sprite(60, 0, 'CoracaoSemVida')
+                    break;
+                case 3:
+                    Coracao[contCoracoes] = game.add.sprite(90, 0, 'CoracaoSemVida')
+                    break;
+                case 4:
+                    Coracao[contCoracoes] = game.add.sprite(120, 0, 'CoracaoSemVida')
+                    break;
+            }
+            contCoracoes--
+            if (contCoracoes < 0) {
+                if (fase > 4) {
+                    contCoracoes = 2;
+                }
+                if (fase >= 4) {
+                    contCoracoes = 3;
+                }
+                if (fase >= 6) {
+                    contCoracoes = 4
+                }
+            }
+            if (Player.vida <= 0) {
+                Player.kill();
+                vidas--;
+                PlayerVivo = false;
+            }
+            enemyBullet.kill();
+        }
+        function HitinimigoT(player, inimigoTerra) {
+            //Ao dar hit em um inimigo da terra, tira 1 de vida do mesmo e se a vida dele for menor ou igual a 0 ele morre.
+            inimigoTerra.vida--
+            if (inimigoTerra.vida < 0) {
+                inimigosVivos -= 1
+                inimigoTerra.kill()
+                pontuacao += pontuacaoInimigoTerrestre;
+                inimigoTerraMorreu = true;
+                contabilizaMorteInimigo(5, inimigoTerra);
+
+
+            }
+            if (inimigoTerra.body.x < Player.body.x) {
+                Player.body.x += 50;
+            }
+            if (inimigoTerra.body.x > Player.body.x) {
+                Player.body.x -= 50;
+            }
+
+            if (inimigoTerra.body.x < Player.body.x) {
+                inimigoTerra.body.x -= 30;
+            }
+            if (inimigoTerra.body.x > Player.body.x) {
+                inimigoTerra.body.x += 30;
+            }
+        }
+        function contabilizaMorteInimigo(numero, inimigoAero) {
+            //Ao matar um inimigo, ele envia um numero para essa função, cada numero ele faz um determinado tratamento,
+            //para subir o texto certo, se é o do boss, do inimigo terrestre, ou do inimigo do ar.
+            if (salvaNumero == 1 && acertouInimigoAero) {
+                numero = 1;
+            }
+            if (salvaNumero == 3 && acertouBoss) {
+                numero = 3;
+            }
+            if (salvaNumero == 5 && acertouInimigoTerra) {
+                numero = 6;
+            }
+            if (numero == 6) {
+                if (inimigoTerraMorreu && contInimigoMortoTexto != -20) {
+                    pontoInimigo.setText('+' + pontuacaoInimigoTerrestre);
+                    pontoInimigo.x = x1;
+                    pontoInimigo.y = y2 + contInimigoMortoTexto;
+                    contInimigoMortoTexto -= 0.5
+                } else {
+                    inimigoTerraMorreu = false;
+                    contInimigoMortoTexto = 0
+                    pontoInimigo.setText('');
+                    salvaNumero = 0;
+                }
+            }
+
+            if (numero == 1) {
+                if (inimigoArMorreu && contInimigoMortoTexto >= -20) {
+                    pontoInimigo.setText('+' + pontuacaoInimigoAero)
+                    pontoInimigo.x = x1;
+                    pontoInimigo.y = y2 + contInimigoMortoTexto;
+                    contInimigoMortoTexto -= 0.5
+
+                } else {
+                    inimigoArMorreu = false;
+                    contInimigoMortoTexto = 0
+                    pontoInimigo.setText('');
+                    numero = -1;
+                    acertouInimigoAero = false;
+                }
+
+            }
+
+            if (numero == 2) {
+                acertouInimigoAero = true;
+                salvaNumero = 1
+                x1 = inimigoAero.x;
+                y2 = inimigoAero.y;
+            }
+            if (numero == 4) {
+                acertouBoss = true;
+                salvaNumero = 3;
+                x1 = inimigoAero.x;
+                y2 = inimigoAero.y;
+            }
+            if (numero == 5) {
+                acertouInimigoTerra = true;
+                salvaNumero = 5;
+                x1 = inimigoAero.x;
+                y2 = inimigoAero.y;
+            }
+
+
+            if (numero == 3) {
+                if (!bossVivo && contInimigoMortoTexto >= -20) {
+                    pontoInimigo.setText('+' + pontuacaoBoss)
+                    pontoInimigo.x = x1;
+                    pontoInimigo.y = y2 + contInimigoMortoTexto;
+                    contInimigoMortoTexto -= 0.5
+
+                } else {
+                    contInimigoMortoTexto = 0
+                    pontoInimigo.setText('');
+                    numero = -1;
+                    acertouBoss = false;
+                }
+            }
+        }
+        //Funções dos inimigos e boss
+        function adicionaInimigosETiros() {
+            //Cria os tiros e os inimigos, como inimigo do ar, do chão e o boss
+            //slimes
+            boss1 = game.add.sprite(1, 60, 'boss' + numboss);
+            game.physics.enable(boss1, Phaser.Physics.ARCADE);
+            boss1.anchor.set(0.5);
+            boss1.vida = vidaBoss;
+            boss1.body.immovable = true;
+
+
+            bullets = game.add.group();
+            bullets = game.add.group();
+            bullets.enableBody = true;
+            bullets.physicsBodyType = Phaser.Physics.ARCADE;
+
+            for (var i = 0; i < 1; i++) {
+                var b = bullets.create(0, 0, 'bullet');
+                b.name = 'bullet' + i;
+                b.exists = false;
+                b.visible = false;
+                b.checkWorldBounds = true;
+                b.events.onOutOfBounds.add(resetBullet, this);
+
+            }
+
+            bulletsBoss = game.add.group();
+            bulletsBoss.enableBody = true;
+            bulletsBoss.physicsBodyType = Phaser.Physics.ARCADE;
+            for (var i = 0; i < 1; i++) {
+                var bs = bulletsBoss.create(0, 0, 'bulletBoss');
+                bs.name = 'bulletBoss' + i;
+                bs.exists = false;
+                bs.visible = false;
+                bs.checkWorldBounds = true;
+                bs.events.onOutOfBounds.add(resetBulletBoss, this);
+
+            }
+            inimigosAero = game.add.group();
+            inimigosAero.enableBody = true;
+            inimigosAero.physicsBodyType = Phaser.Physics.ARCADE;
+
+            for (var i = 0; i < inimigosCriadosSpawnAero; i++) {
+                var ia = inimigosAero.create(-1, 250, 'slime' + numboss);
+
+                ia.name = 'iniA' + i;
+                ia.body.immovable = true;
+                ia.vida = vidaInimigoAero;
+                ia.anchor.set(0.5);
+                ia.body.velocity.set(Math.random() * (350 - 50) + 50)
+                inimigosVivos += 1
+            }
+            enemyBullets = game.add.group();
+            enemyBullets.enableBody = true;
+            enemyBullets.physicsBodyType = Phaser.Physics.ARCADE;
+            switch (numboss) {
+                case 1:
+                    enemyBullets.createMultiple(30, 'enemyBullet1');
+                    break;
+                case 2:
+                    enemyBullets.createMultiple(30, 'enemyBullet2');
+                    break;
+                case 3:
+                    enemyBullets.createMultiple(30, 'enemyBullet3');
+                    break;
+                case 4:
+                    enemyBullets.createMultiple(30, 'enemyBullet4');
+                    break;
+                case 5:
+                    enemyBullets.createMultiple(30, 'enemyBullet5');
+                    break;
+                case 6:
+                    enemyBullets.createMultiple(30, 'enemyBullet6');
+                    break;
+                case 7:
+                    enemyBullets.createMultiple(30, 'enemyBullet7');
+                    break;
+                case 8:
+                    enemyBullets.createMultiple(30, 'enemyBullet8');
+                    break;
+
+
+                default:
+                    break;
+            }
+
+            enemyBullets.setAll('anchor.x', 0.5);
+            enemyBullets.setAll('anchor.y', 1);
+            enemyBullets.setAll('outOfBoundsKill', true);
+            enemyBullets.setAll('checkWorldBounds', true);
+
+            //Define o escudo
+            switch (numboss) {
+                case 1:
+                    escudo = game.add.sprite(300, 100, 'escudo1');
+                    break;
+                case 2:
+                    escudo = game.add.sprite(300, 100, 'escudo2');
+                    break;
+                case 5:
+                    escudo = game.add.sprite(300, 100, 'escudo5');
+                    break;
+                case 8:
+                	escudo = game.add.sprite(300, 100, 'escudo8');
+                	break;
+                default:
+                    escudo = game.add.sprite(300, 100, 'escudo2');
+                    break;
+
+
+            }
+
+            game.physics.enable(escudo, Phaser.Physics.ARCADE);
+            escudo.anchor.set(0.5);
+            escudo.vida = vidaEscudo;
+            escudo.body.immovable = true;
+
+            //Adiciona o inimigo da terra
+            inimigoTerra = game.add.group();
+            inimigoTerra.enableBody = true;
+            inimigoTerra.physicsBodyType = Phaser.Physics.ARCADE;
+
+            for (var i = 0; i < inimigosCriadosSpawnChao; i++) {
+                var it
+                var randomizaLado = Math.random() * (10 - 0) + 0;
+                if (randomizaLado >= 5) {
+                    it = inimigoTerra.create(-1, 501, 'slimeTerra' + numboss);
+                } else {
+                    it = inimigoTerra.create(801, 501, 'slimeTerra' + numboss);
+                }
+
+                it.name = 'iniT' + i;
+                it.body.immovable = true;
+                it.vida = vidaInimigoTerrestre;
+                it.anchor.set(0.5);
+                it.body.velocity.set(Math.random() * (350 - 50) + 50, 0)
+                inimigosVivos += 1
+            }
+
+        }
+        function andarBoss() {
+            //Define para onde o boss ira andar, se ele bater na esquerda ele vai para a direita, e vice versa
+            if (boss1.body.x < 0) {
+                boss1.body.velocity.set(100, 0)
+            }
+            if (boss1.body.x + boss1.width > game.world.width) {
+                boss1.body.velocity.set(-100, 0)
+            }
+        }
+        function bossAtira() {
+            //Define se o boss pode atirar, ele so podera atirar se o seu contador for igual a 0 e se ele estiver vivo.
+            if (podeatirarBoss == true & bossVivo) {
+                fireBulletBoss();
+                contadortiroBoss = 50;
+                podeatirarBoss = false;
+            }
+            if (contadortiroBoss == 0) {
+                podeatirarBoss = true
+            }
+            if (podeatirarBoss == false) {
+                contadortiroBoss--
+            }
+
+        }
+        function escudoBoss1() {
+            //Define onde ficara a posição do escudo.
+            x = boss1.body.x - 50;
+            y = boss1.body.y;
+
+
+            escudo.body.x = x
+            if (boss1)
+                if (numboss == 1) {
+                    escudo.body.y = y + 200, 'escudo';
+                } else if (numboss == 2) {
+                    escudo.body.y = y + 50, 'escudo';
+                } else if (numboss == 3) {
+                    escudo.body.y = y + 120, 'escudo';
+                } else if (numboss == 4) {
+                    escudo.body.y = y + 150, 'escudo';
+                } else if (numboss == 5) {
+                    escudo.body.y = y + 150, 'escudo';
+                } else if (numboss == 6) { 
+                    escudo.body.y = y + 150, 'escudo';
+                } else if (numboss == 7) {
+                    escudo.body.y = y + 150, 'escudo';
+                } else if (numboss == 8) {
+                    escudo.body.y = y + 120, 'escudo';
+                }
+
+
+
+        }
+        function moverInimigo() {
+            //Define a velocidade e a colisão das bordas do inimigo do ar e da terra.
+            inimigosAero.forEach(el => {
+
+                if (el.body.x + 25 <= 0) {
+                    el.body.velocity.set((Math.random() * (350 - 50) + 50), 0);
+                }
+                if (el.body.x - 150 > game.world.height) {
+                    el.body.velocity.set((Math.random() * (50 - 350) + 50), 0);
+                }
+
+
+            });
+            inimigoTerra.forEach(et => {
+                if (et.body.x + 25 <= 0) {
+                    et.body.velocity.set((Math.random() * (350 - 50) + 50), 0);
+                }
+                if (et.body.x - 150 > game.world.height) {
+                    et.body.velocity.set((Math.random() * (50 - 350) + 50), 0);
+                }
+            })
+        }
+        function enemyFires() {
+
+            // Pegue a primeira bala que pudermos da piscina
+            enemyBullet = enemyBullets.getFirstExists(false);
+
+            livingEnemies.length = 0;
+
+            inimigosAero.forEachAlive(function (inimigosAero) {
+
+                //Coloca todos os inimigos vivos em uma matriz
+                livingEnemies.push(inimigosAero);
+            });
+
+            if (enemyBullet && livingEnemies.length > 0) {
+
+                var random = game.rnd.integerInRange(0, livingEnemies.length - 1);
+                // Aleatóriamente seleciona um deles
+                var shooter = livingEnemies[random];
+                // E disparar a bala deste inimigo
+                enemyBullet.reset(shooter.body.x, shooter.body.y);
+
+                game.physics.arcade.moveToObject(enemyBullet, Player, velocidadeTiroInimigo);
+                switch (qntTiroInimi) {
+                    case 1:
+                        firingTimer = game.time.now + 3000;
+                        break;
+                    case 2:
+                        firingTimer = game.time.now + 2500;
+                        break;
+                    case 3:
+                        firingTimer = game.time.now + 2000;
+                        break;
+                    case 4:
+                        firingTimer = game.time.now + 1750;
+                        break;
+                    case 5:
+                        firingTimer = game.time.now + 1400;
+                        break;
+
+
+                }
+            }
+
+        }
+        function fireBulletBoss() {
+            //Função que cuida do movimento da bala do boss
+            if (game.time.now > bulletTimeBoss) {
+                bulletBoss = bulletsBoss.getFirstExists(false);
+                if (bulletBoss) {
+                    bulletBoss.reset(boss1.x - 7, boss1.y + 50);
+                    bulletBoss.body.velocity.y += velocidadeTiroBoss;
+                    bulletTimeBoss = game.time.now + 150;
+                }
+            }
+        }
+        function resetBulletBoss(bulletBoss) {
+            //Ao chamar essa função, elimina a bala do inimigo
+            bulletBoss.kill(bulletBoss);
+
+        }
+
+
+        //Criação de inimigos
+        function criaInimigosNoHit() {
+            //Aleatoriza a criação de inimigos quando é detectado um tiro no escudo ou no boss
+            var randomizaSpawn = Math.random() * (20 - 0) + 0;
+            if (randomizaSpawn > probabilidadeSpawnAero) {
+                var ia = inimigosAero.create(-1, 250, 'slime' + numboss);
+                ia.name = 'iniA';
+                ia.body.immovable = true;
+                ia.vida = vidaInimigoAero;
+                ia.anchor.set(0.5);
+                ia.x += 1;
+                ia.body.velocity.set(Math.random() * (350 - 50) + 50, 0)
+                inimigosVivos += 1
+            }
+            if (randomizaSpawn <= probabilidadeSpawnTerrestre) {
+                var it
+                var randomizaLado = Math.random() * (10 - 0) + 0;
+                if (randomizaLado >= 5) {
+                    it = inimigoTerra.create(-1, 501, 'slimeTerra' + numboss);
+                } else {
+                    it = inimigoTerra.create(801, 501, 'slimeTerra' + numboss);
+                }
+
+
+                it.name = 'iniT';
+                it.body.immovable = true;
+                it.vida = vidaInimigoTerrestre;
+                it.anchor.set(0.5);
+                it.x += 1;
+                it.body.velocity.set(Math.random() * (350 - 50) + 50, 0)
+                inimigosVivos += 1
+            }
+        }
+
+
+        //Cria neve
+        function changeWindDirection() {
+            var multi = Math.floor((max + 200) / 4),
+                frag = (Math.floor(Math.random() * 100) - multi);
+            max = max + frag;
+
+            if (max > 200) max = 150;
+            if (max < -200) max = -150;
+
+            setXSpeed(back_emitter, max);
+            setXSpeed(mid_emitter, max);
+            setXSpeed(front_emitter, max);
+        }
+        function setXSpeed(emitter, max) {
+            emitter.setXSpeed(max - 20, max);
+            emitter.forEachAlive(setParticleXSpeed, this, max);
+        }
+        function setParticleXSpeed(particle, max) {
+            particle.body.velocity.x = max - Math.floor(Math.random() * 30);
+        }
+        function adicionaNeve() {
+            back_emitter = game.add.emitter(game.world.centerX, -32, 600);
+            back_emitter.makeParticles('snowflakes', [0, 1, 2, 3, 4, 5]);
+            back_emitter.maxParticleScale = 0.6;
+            back_emitter.minParticleScale = 0.2;
+            back_emitter.setYSpeed(20, 100);
+            back_emitter.gravity = 0;
+            back_emitter.width = game.world.width * 1.5;
+            back_emitter.minRotation = 0;
+            back_emitter.maxRotation = 40;
+
+            mid_emitter = game.add.emitter(game.world.centerX, -32, 250);
+            mid_emitter.makeParticles('snowflakes', [0, 1, 2, 3, 4, 5]);
+            mid_emitter.maxParticleScale = 1.2;
+            mid_emitter.minParticleScale = 0.8;
+            mid_emitter.setYSpeed(50, 150);
+            mid_emitter.gravity = 0;
+            mid_emitter.width = game.world.width * 1.5;
+            mid_emitter.minRotation = 0;
+            mid_emitter.maxRotation = 40;
+
+            front_emitter = game.add.emitter(game.world.centerX, -32, 50);
+            front_emitter.makeParticles('snowflakes_large', [0, 1, 2, 3, 4, 5]);
+            front_emitter.maxParticleScale = 1;
+            front_emitter.minParticleScale = 0.5;
+            front_emitter.setYSpeed(100, 200);
+            front_emitter.gravity = 0;
+            front_emitter.width = game.world.width * 1.5;
+            front_emitter.minRotation = 0;
+            front_emitter.maxRotation = 40;
+
+            changeWindDirection();
+
+            back_emitter.start(false, 14000, 20);
+            mid_emitter.start(false, 12000, 40);
+            front_emitter.start(false, 6000, 1000);
+        }
+        function animaNeve() {
+            i++;
+
+            if (i === update_interval) {
+                changeWindDirection();
+                update_interval = Math.floor(Math.random() * 20) * 60; // 0 - 20sec @ 60fps
+                i = 0;
+            }
+        }
+        //Redefinição de jogo
+        function recomecar(fase) {
+      
+        	if(fase != 9){
+				if (fase <= pontFaze) {
+					pontuacao = pontuacaoAntiga;
+				}
+				if (fase > pontFaze) {
+					pontuacaoAntiga = pontuacao;
+					pontFaze = fase;
+				}
+
+				if (pontuacao == 0) {
+					textoPontuacao.setText("Sem pontuação");
+				}
+				reiniciaVariaveisPadroes(fase);
+				reiniciaVariaveis(fase);
+				
+			} else {
+				
+				findoFimExibe1vez = false;
+			        if (!findoFimExibe1vez) {
+			        	
+                	salvaScores(fase,pontuacao);
+                    $('#fimJogo').show();
+			        }
+       	 	}
+        }
+        function reiniciaVariaveis(fase) {
+            switch (fase) {
+                case 1:
+                    Player = 0;
+                    Inimigo = 0;
+                    rightKey = 0;
+                    leftKey = 0;
+                    bulletTime = 0;
+                    bullet;
+                    podeatirar = false;
+                    contadortiro = 0;
+                    PlayerVivo = true;
+                    contCoracoes = 2;
+                    Coracao = [0, 0, 0];
+                    boss1 = 0;
+                    bulletTimeBoss = 0;
+                    bulletBoss = 0;
+                    textoPontuacao = 0;
+                    podeatirarBoss = false;
+                    contadortiroBoss = 0;
+                    bossVivo = true;
+                    escudo = 0;
+                    x = 0;
+                    y = 0;
+                    inimigosAero = 0;
+                    inimigoTerra = 0;
+                    livingEnemies = [];
+                    inimigosCriados = 0;
+                    enemyBullets = 0;
+                    firingTimer = 0;
+                    pontoInimigo = 0;
+                    fundoFim = 0;
+                    findoFimExibe1vez = false;
+                    textoFim = 0;
+                    acertouInimigoTerra = false;
+                    inimigoTerraMorreu = false;
+                    inimigoArMorreu = false;
+                    acertouInimigoAero = false;
+                    salvaNumero = 0;
+                    contInimigoTerraMortoTexto = 0
+                    x1 = 0;
+                    y2 = 0;
+                    acertouBoss = false;
+                    pressionouEspaco = false;
+                    contadorMorte = 0;
+                    neveJaRende = true;
+                    inimigosVivos = 0;
+                    qntTiroInimi = 2;
+                    renderizouFundo1Vez = false;
+                    if (passouFase1 == 0) {
+                        destruirSpritesNeve()
+                    }
+                    create();
+                    break;
+
+                case 2:
+                    teste = 'imagens/tiro.png';
+                    Player = 0;
+                    venceu = false;
+                    Inimigo = 0;
+                    rightKey = 0;
+                    leftKey = 0;
+                    bulletTime = 0;
+                    bullet;
+                    podeatirar = false;
+                    contadortiro = 0;
+                    PlayerVivo = true;
+                    contCoracoes = 2;
+                    Coracao = [0, 0, 0];
+                    boss1 = 0;
+                    bulletTimeBoss = 0;
+                    bulletBoss = 0;
+                    textoPontuacao = 0;
+                    podeatirarBoss = false;
+                    contadortiroBoss = 0;
+                    bossVivo = true;
+                    escudo = 0;
+                    x = 0;
+                    y = 0;
+                    inimigosAero = 0;
+                    inimigoTerra = 0;
+                    livingEnemies = [];
+                    inimigosCriados = 0;
+                    enemyBullets = 0;
+                    firingTimer = 0;
+                    pontoInimigo = 0;
+                    fundoFim = 0;
+                    findoFimExibe1vez = false;
+                    textoFim = 0;
+                    acertouInimigoTerra = false;
+                    inimigoTerraMorreu = false;
+                    inimigoArMorreu = false;
+                    acertouInimigoAero = false;
+                    salvaNumero = 0;
+                    contInimigoTerraMortoTexto = 0
+                    x1 = 0;
+                    y2 = 0;
+                    acertouBoss = false;
+                    pressionouEspaco = false;
+                    contadorMorte = 0;
+                    teste = 0;
+                    inimigosVivos = 0;
+                    qntTiroInimi = 2;
+                    renderizouFundo1Vez = false;
+                    if (passouFase1 == 0) {
+                        destruirSpritesNeve();
+                    }
+                    carregaImagens();
+                    create();
+
+                    break;
+                case 3:
+                    teste = 'imagens/tiro.png';
+                    Player = 0;
+                    venceu = false;
+                    Inimigo = 0;
+                    rightKey = 0;
+                    leftKey = 0;
+                    bulletTime = 0;
+                    bullet;
+                    podeatirar = false;
+                    contadortiro = 0;
+                    PlayerVivo = true;
+                    contCoracoes = 2;
+                    Coracao = [];
+                    boss1 = 0;
+                    bulletTimeBoss = 0;
+                    bulletBoss = 0;
+                    textoPontuacao = 0;
+                    podeatirarBoss = false;
+                    contadortiroBoss = 0;
+                    bossVivo = true;
+                    escudo = 0;
+                    x = 0;
+                    y = 0;
+                    inimigosAero = 0;
+                    inimigoTerra = 0;
+                    livingEnemies = [];
+                    inimigosCriados = 0;
+                    enemyBullets = 0;
+                    firingTimer = 0;
+                    pontoInimigo = 0;
+                    fundoFim = 0;
+                    findoFimExibe1vez = false;
+                    textoFim = 0;
+                    acertouInimigoTerra = false;
+                    inimigoTerraMorreu = false;
+                    inimigoArMorreu = false;
+                    acertouInimigoAero = false;
+                    salvaNumero = 0;
+                    contInimigoTerraMortoTexto = 0
+                    x1 = 0;
+                    y2 = 0;
+                    acertouBoss = false;
+                    pressionouEspaco = false;
+                    contadorMorte = 0;
+                    teste = 0;
+                    inimigosVivos = 0;
+                    qntTiroInimi = 3;
+                    renderizouFundo1Vez = false;
+                    carregaImagens();
+                    create();
+
+
+                    break;
+                case 4:
+                    teste = 'imagens/tiro.png';
+                    Player = 0;
+                    venceu = false;
+                    Inimigo = 0;
+                    rightKey = 0;
+                    leftKey = 0;
+                    bulletTime = 0;
+                    bullet;
+                    podeatirar = false;
+                    contadortiro = 0;
+                    PlayerVivo = true;
+                    contCoracoes = 3;
+                    Coracao = [];
+                    boss1 = 0;
+                    bulletTimeBoss = 0;
+                    bulletBoss = 0;
+                    textoPontuacao = 0;
+                    podeatirarBoss = false;
+                    contadortiroBoss = 0;
+                    bossVivo = true;
+                    escudo = 0;
+                    x = 0;
+                    y = 0;
+                    inimigosAero = 0;
+                    inimigoTerra = 0;
+                    livingEnemies = [];
+                    inimigosCriados = 0;
+                    enemyBullets = 0;
+                    firingTimer = 0;
+                    pontoInimigo = 0;
+                    fundoFim = 0;
+                    findoFimExibe1vez = false;
+                    textoFim = 0;
+                    acertouInimigoTerra = false;
+                    inimigoTerraMorreu = false;
+                    inimigoArMorreu = false;
+                    acertouInimigoAero = false;
+                    salvaNumero = 0;
+                    contInimigoTerraMortoTexto = 0
+                    x1 = 0;
+                    y2 = 0;
+                    acertouBoss = false;
+                    pressionouEspaco = false;
+                    contadorMorte = 0;
+                    teste = 0;
+                    inimigosVivos = 0;
+                    qntTiroInimi = 3;
+                    renderizouFundo1Vez = false;
+                    carregaImagens();
+                    create();
+
+
+                    break;
+                case 5:
+                    teste = 'imagens/tiro.png';
+                    Player = 0;
+                    venceu = false;
+                    Inimigo = 0;
+                    rightKey = 0;
+                    leftKey = 0;
+                    bulletTime = 0;
+                    bullet;
+                    podeatirar = false;
+                    contadortiro = 0;
+                    PlayerVivo = true;
+                    contCoracoes = 3;
+                    Coracao = [];
+                    boss1 = 0;
+                    bulletTimeBoss = 0;
+                    bulletBoss = 0;
+                    textoPontuacao = 0;
+                    podeatirarBoss = false;
+                    contadortiroBoss = 0;
+                    bossVivo = true;
+                    escudo = 0;
+                    x = 0;
+                    y = 0;
+                    inimigosAero = 0;
+                    inimigoTerra = 0;
+                    livingEnemies = [];
+                    inimigosCriados = 0;
+                    enemyBullets = 0;
+                    firingTimer = 0;
+                    pontoInimigo = 0;
+                    fundoFim = 0;
+                    findoFimExibe1vez = false;
+                    textoFim = 0;
+                    acertouInimigoTerra = false;
+                    inimigoTerraMorreu = false;
+                    inimigoArMorreu = false;
+                    acertouInimigoAero = false;
+                    salvaNumero = 0;
+                    contInimigoTerraMortoTexto = 0
+                    x1 = 0;
+                    y2 = 0;
+                    acertouBoss = false;
+                    pressionouEspaco = false;
+                    contadorMorte = 0;
+                    teste = 0;
+                    inimigosVivos = 0;
+                    qntTiroInimi = 4;
+                    renderizouFundo1Vez = false;
+                    carregaImagens();
+                    create();
+
+                    break;
+                case 6:
+                    teste = 'imagens/tiro.png';
+                    Player = 0;
+                    venceu = false;
+                    Inimigo = 0;
+                    rightKey = 0;
+                    leftKey = 0;
+                    bulletTime = 0;
+                    bullet;
+                    podeatirar = false;
+                    contadortiro = 0;
+                    PlayerVivo = true;
+                    contCoracoes = 4;
+                    Coracao = [];
+                    boss1 = 0;
+                    bulletTimeBoss = 0;
+                    bulletBoss = 0;
+                    textoPontuacao = 0;
+                    podeatirarBoss = false;
+                    contadortiroBoss = 0;
+                    bossVivo = true;
+                    escudo = 0;
+                    x = 0;
+                    y = 0;
+                    inimigosAero = 0;
+                    inimigoTerra = 0;
+                    livingEnemies = [];
+                    inimigosCriados = 0;
+                    enemyBullets = 0;
+                    firingTimer = 0;
+                    pontoInimigo = 0;
+                    fundoFim = 0;
+                    findoFimExibe1vez = false;
+                    textoFim = 0;
+                    acertouInimigoTerra = false;
+                    inimigoTerraMorreu = false;
+                    inimigoArMorreu = false;
+                    acertouInimigoAero = false;
+                    salvaNumero = 0;
+                    contInimigoTerraMortoTexto = 0
+                    x1 = 0;
+                    y2 = 0;
+                    acertouBoss = false;
+                    pressionouEspaco = false;
+                    contadorMorte = 0;
+                    teste = 0;
+                    inimigosVivos = 0;
+                    qntTiroInimi = 4;
+                    renderizouFundo1Vez = false;
+                    carregaImagens();
+                    create();
+
+                    break;
+                case 7:
+                    teste = 'imagens/tiro.png';
+                    Player = 0;
+                    venceu = false;
+                    Inimigo = 0;
+                    rightKey = 0;
+                    leftKey = 0;
+                    bulletTime = 0;
+                    bullet;
+                    podeatirar = false;
+                    contadortiro = 0;
+                    PlayerVivo = true;
+                    contCoracoes = 4;
+                    Coracao = [];
+                    boss1 = 0;
+                    bulletTimeBoss = 0;
+                    bulletBoss = 0;
+                    textoPontuacao = 0;
+                    podeatirarBoss = false;
+                    contadortiroBoss = 0;
+                    bossVivo = true;
+                    escudo = 0;
+                    x = 0;
+                    y = 0;
+                    inimigosAero = 0;
+                    inimigoTerra = 0;
+                    livingEnemies = [];
+                    inimigosCriados = 0;
+                    enemyBullets = 0;
+                    firingTimer = 0;
+                    pontoInimigo = 0;
+                    fundoFim = 0;
+                    findoFimExibe1vez = false;
+                    textoFim = 0;
+                    acertouInimigoTerra = false;
+                    inimigoTerraMorreu = false;
+                    inimigoArMorreu = false;
+                    acertouInimigoAero = false;
+                    salvaNumero = 0;
+                    contInimigoTerraMortoTexto = 0
+                    x1 = 0;
+                    y2 = 0;
+                    acertouBoss = false;
+                    pressionouEspaco = false;
+                    contadorMorte = 0;
+                    teste = 0;
+                    inimigosVivos = 0;
+                    qntTiroInimi = 5;
+                    renderizouFundo1Vez = false;
+                    carregaImagens();
+                    create();
+
+                    break;
+                case 8:
+                    teste = 'imagens/tiro.png';
+                    Player = 0;
+                    venceu = false;
+                    Inimigo = 0;
+                    rightKey = 0;
+                    leftKey = 0;
+                    bulletTime = 0;
+                    bullet;
+                    podeatirar = false;
+                    contadortiro = 0;
+                    PlayerVivo = true;
+                    contCoracoes = 4;
+                    Coracao = [];
+                    boss1 = 0;
+                    bulletTimeBoss = 0;
+                    bulletBoss = 0;
+                    textoPontuacao = 0;
+                    podeatirarBoss = false;
+                    contadortiroBoss = 0;
+                    bossVivo = true;
+                    escudo = 0;
+                    x = 0;
+                    y = 0;
+                    inimigosAero = 0;
+                    inimigoTerra = 0;
+                    livingEnemies = [];
+                    inimigosCriados = 0;
+                    enemyBullets = 0;
+                    firingTimer = 0;
+                    pontoInimigo = 0;
+                    fundoFim = 0;
+                    findoFimExibe1vez = false;
+                    textoFim = 0;
+                    acertouInimigoTerra = false;
+                    inimigoTerraMorreu = false;
+                    inimigoArMorreu = false;
+                    acertouInimigoAero = false;
+                    salvaNumero = 0;
+                    contInimigoTerraMortoTexto = 0
+                    x1 = 0;
+                    y2 = 0;
+                    acertouBoss = false;
+                    pressionouEspaco = false;
+                    contadorMorte = 0;
+                    teste = 0;
+                    inimigosVivos = 0;
+                    qntTiroInimi = 5;
+                    renderizouFundo1Vez = false;
+                    carregaImagens();
+                    create();
+
+                    break;
+            }
+
+        }
+        function destruirSpritesNeve() {
+            back_emitter.destroy(true, true);
+            mid_emitter.destroy(true, true);
+            front_emitter.destroy(true, true);
+            if (fase != 1) {
+                passouFase1 = 1;
+            } else {
+                passouFase1 = 0;
+            }
+        }
+        function togglePause() {
+        
+        	game.physics.arcade.isPaused = (game.physics.arcade.isPaused) ? false : true;
+        	
+        	if(game.physics.arcade.isPaused == true){
+        		$('#pause').show();
+        	}else{
+        		$('#pause').toggle();
+        	}
+          
+
+       }
+        
+       
+        function reiniciaVariaveisPadroes(fase) {
+            switch (fase) {
+                case 1:
+                    inimigosCriadosSpawnAero = 1;
+                    inimigosCriadosSpawnChao = 0;
+                    velocidadeTiroBoss = 500;
+                    velocidadeTiroInimigo = 80;
+                    vidaInimigoAero = 2;
+                    vidaInimigoTerrestre = 3;
+                    vidaBoss = 3;
+                    vidaEscudo = 4;
+                    probabilidadeSpawnAero = 18;
+                    probabilidadeSpawnTerrestre = 2;
+                    pontuacaoBoss = 500;
+                    pontuacaoInimigoAero = 50;
+                    pontuacaoInimigoTerrestre = 25;
+                    break;
+                case 2:
+                    inimigosCriadosSpawnAero = 2;
+                    inimigosCriadosSpawnChao = 1;
+                    velocidadeTiroBoss = 600;
+                    velocidadeTiroInimigo = 85;
+                    vidaInimigoAero = 2;
+                    vidaInimigoTerrestre = 4;
+                    vidaBoss = 4;
+                    vidaEscudo = 5;
+                    probabilidadeSpawnAero = 17;
+                    probabilidadeSpawnTerrestre = 5;
+                    pontuacaoBoss = 750;
+                    pontuacaoInimigoAero = 75;
+                    pontuacaoInimigoTerrestre = 50;
+                    break;
+                case 3:
+                    inimigosCriadosSpawnAero = 3;
+                    inimigosCriadosSpawnChao = 2;
+                    velocidadeTiroBoss = 650;
+                    velocidadeTiroInimigo = 90;
+                    vidaInimigoAero = 3;
+                    vidaInimigoTerrestre = 5;
+                    vidaBoss = 5;
+                    vidaEscudo = 5;
+                    probabilidadeSpawnAero = 16;
+                    probabilidadeSpawnTerrestre = 6;
+                    pontuacaoBoss = 800;
+                    pontuacaoInimigoAero = 100;
+                    pontuacaoInimigoTerrestre = 75;
+                    break;
+                case 4:
+                    inimigosCriadosSpawnAero = 3;
+                    inimigosCriadosSpawnChao = 2;
+                    velocidadeTiroBoss = 675;
+                    velocidadeTiroInimigo = 93;
+                    vidaInimigoAero = 3;
+                    vidaInimigoTerrestre = 5;
+                    vidaBoss = 6;
+                    vidaEscudo = 5;
+                    probabilidadeSpawnAero = 15;
+                    probabilidadeSpawnTerrestre = 6;
+                    pontuacaoBoss = 850;
+                    pontuacaoInimigoAero = 115;
+                    pontuacaoInimigoTerrestre = 85;
+                    break;
+                case 5:
+                    inimigosCriadosSpawnAero = 3;
+                    inimigosCriadosSpawnChao = 2;
+                    velocidadeTiroBoss = 700;
+                    velocidadeTiroInimigo = 95;
+                    vidaInimigoAero = 4;
+                    vidaInimigoTerrestre = 5;
+                    vidaBoss = 7;
+                    vidaEscudo = 6;
+                    probabilidadeSpawnAero = 15;
+                    probabilidadeSpawnTerrestre = 7;
+                    pontuacaoBoss = 900;
+                    pontuacaoInimigoAero = 120;
+                    pontuacaoInimigoTerrestre = 100;
+                    break;
+                case 6:
+                    inimigosCriadosSpawnAero = 4;
+                    inimigosCriadosSpawnChao = 2;
+                    velocidadeTiroBoss = 750;
+                    velocidadeTiroInimigo = 100;
+                    vidaInimigoAero = 4;
+                    vidaInimigoTerrestre = 5;
+                    vidaBoss = 7;
+                    vidaEscudo = 6;
+                    probabilidadeSpawnAero = 14;
+                    probabilidadeSpawnTerrestre = 7;
+                    pontuacaoBoss = 950;
+                    pontuacaoInimigoAero = 130;
+                    pontuacaoInimigoTerrestre = 110;
+                    break;
+                case 7:
+                    inimigosCriadosSpawnAero = 4;
+                    inimigosCriadosSpawnChao = 2;
+                    velocidadeTiroBoss = 800;
+                    velocidadeTiroInimigo = 110;
+                    vidaInimigoAero = 5
+                    vidaInimigoTerrestre = 6;
+                    vidaBoss = 8;
+                    vidaEscudo = 6;
+                    probabilidadeSpawnAero = 13;
+                    probabilidadeSpawnTerrestre = 8;
+                    pontuacaoBoss = 1200;
+                    pontuacaoInimigoAero = 250;
+                    pontuacaoInimigoTerrestre = 200;
+                    break;
+                case 8:
+                    inimigosCriadosSpawnAero = 5;
+                    inimigosCriadosSpawnChao = 4;
+                    velocidadeTiroBoss = 900;
+                    velocidadeTiroInimigo = 120;
+                    vidaInimigoAero = 5;
+                    vidaInimigoTerrestre = 7;
+                    vidaBoss = 8;
+                    vidaEscudo = 6;
+                    probabilidadeSpawnAero = 10;
+                    probabilidadeSpawnTerrestre = 10;
+                    pontuacaoBoss = 2000;
+                    pontuacaoInimigoAero = 500;
+                    pontuacaoInimigoTerrestre = 300;
+                    break;
+            }
+         
+            
+          
+        }
+		function reiniciaFase(fase){
+			salvaScores(fase,pontuacao);
+            vidas = 5;
+            this.fase = 1;
+            fase = 1;
+            numboss = 1;
+            pontuacao = 0;
+            pontFaze = 1;
+            pontuacaoAntiga = 0;
+            $('#pause').toggle();
+            recomecar(fase);
+		}
+        function salvaScores(faseSalva,pontuacaoSalva){
+            var pInfo = document.querySelector('#p_infoPessoa');
+	        var login = document.querySelector('#p_login');
+	        var token = sessionStorage.getItem('token');
+            var claims = JSON.parse(atob(token.split('.')[1]));
+            var score = new Object();
+           
+           score.pontuacao = pontuacaoSalva;
+           score.fase = faseSalva;
+           score.jogadorId = claims.id;
+            $.ajax({
+                url: '/survival/api/score',
+                type: "POST",
+                data: JSON.stringify({
+					pontuacao: score.pontuacao,
+					fase: score.fase,
+	                jogadorId: score.jogadorId}),
+                contentType: 'application/json',
+                success: function (data, textStatus, jqXHR)
+                {
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                }
+            });
+			
+		}
+        
+		
+    </script>
+</body>
+
+</html>
